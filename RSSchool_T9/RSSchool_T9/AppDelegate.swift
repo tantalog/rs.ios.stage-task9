@@ -11,13 +11,33 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let window = UIWindow()
+        window.rootViewController = rootViewContronner()
+        self.window = window
+        self.window?.makeKeyAndVisible()
         return true
     }
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    
+    func rootViewContronner() -> UIViewController {
+        let tabBarController = UITabBarController()
+        var tabBarControllers: [UIViewController] = []
+        let collectionViewController = CollectionViewController()
+        collectionViewController.tabBarItem = UITabBarItem(title: "Items", image: .init(systemName: "square.grid.2x2"), selectedImage: nil)
+        let navigationController = UINavigationController()
+        let settingsModuleViewController = SettingsModuleViewController()
+        navigationController.tabBarItem = UITabBarItem(title: "Settings", image: .init(systemName: "gear"), selectedImage: nil)
+        navigationController.addChild(settingsModuleViewController)
+        tabBarControllers.append(collectionViewController)
+        tabBarControllers.append(navigationController)
+        tabBarController.viewControllers = tabBarControllers
+        return tabBarController
     }
+
+
 }
 
